@@ -2,8 +2,9 @@
 title: Git Push后触发Blog自动Pull和发布
 tags: linux git golang
 date: 2019-01-11
+typora-root-url: ../../source
 ---
-## 问题描述
+## 实现目标
 
 这个需求主要是在我搭建这个blog时遇到的一个自动化问题。
 
@@ -11,11 +12,11 @@ date: 2019-01-11
 
 所以我的目的是很清晰的，就是我只要在我的笔记本上Push代码，Google的虚拟机上就会自动检测到，并触发Pull新代码并自动构建发布的功能。
 
-## 解决方案
+## 问题分析
 
-其实解决方案有很多种，其中一种最简单的办法是将我的构建的发布版本作为github IO的发布方式进行基于github的发布，并绑定域名，就可以解决我的需求，单如果我的blog比较复杂，不是静态页面就不能够实现，于是我去寻找一种更通用的解决办法。
+其实解决方案有很多种，其中一种最简单的办法是将我的构建的发布版本作为github IO的发布方式进行基于github.io的发布，使用cname绑定域名，就可以解决我的需求，但这种只适合静态页面发布，如果我后续有较复杂的功能，或者是其他产品的f发布，就不能够实现了，于是我去寻找一种更通用的解决办法。
 
-我的手动工作主要描述为：
+平时我的手动工作主要描述为：
 
 1. Push：上传代码
 2. Pull：在vps服务器上下载代码
@@ -26,6 +27,21 @@ date: 2019-01-11
 经过调研，发现github有一个非常符合需求的功能，叫webhook，它可以在push的时候给一个你指定的url发一个post请求，我们可以根据这个post请求去触发自动化构建过程。
 
 webhook所调用的post请求需要在vps上进行监听，由于之前我一直在使用golang编程，所以用go语言实现一个web服务用来监听webhook的请求是我的选择，各位可以根据自己的所长进行自己的选择构建web服务。
+
+下面我以我的blog自动构建和发布作为例子向大家展示一个我的解决方案。
+
+## 配置Github webhook
+
+1. 进入自己的github repository，进入setting tab页，点击左侧的webhooks，如下图所示：
+
+   ![chose-webhooks](/images/chose-webhooks.png)
+
+2. 添加一个webhook，并配置：
+
+   ![webhook-config](/images/webhook-config.png)
+
+
+
 
 ## Quick Start7
 
