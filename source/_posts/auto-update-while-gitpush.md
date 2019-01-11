@@ -1,9 +1,11 @@
 ---
-title: Git Push后触发Blog自动Pull和发布
+title: Hexo+Github在push后服务端自动pull和重新构建发布blog
 tags: linux git golang
 date: 2019-01-11
 typora-root-url: ../../source
 ---
+说明：本文我只是提供了一个实现的思路和简单的实现验证，可以根据此思路进行更细致的实现，同时，本文的方法不仅限于Hexo blog自动发布，也适用于需要git pull代码后自动重新提供服务的所有服务组件。
+
 ## 实现目标
 
 这个需求主要是在我搭建这个blog时遇到的一个自动化问题。
