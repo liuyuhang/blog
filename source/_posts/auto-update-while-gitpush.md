@@ -4,13 +4,13 @@ tags: linux git golang
 date: 2019-01-11
 typora-root-url: ../../source
 ---
-说明：本文我只是提供了一个实现的思路和简单的实现，可以根据此思路进行更细致的实现和扩展。同时，本文的方法不仅限于Hexo blog自动发布，也适用于需要git pull代码后自动重新提供服务的所有服务组件。
+本文我只是提供了一个实现的思路和简单的实现，可以根据此思路进行更细致的实现和扩展。同时，本文的方法不仅限于Hexo blog自动发布，也适用于需要git pull代码后自动重新提供服务的所有服务组件。
 
 ## 需求及实现目标
 
 这个需求主要是在我搭建这个blog时遇到的一个自动化问题。
 
-我的Blog是搭建在Goolge的VPS上的，代码保管在Github服务器上，撰写Bolg则是在我的笔记本上进行，当我每次有文章更新的时候，我要先将本地的新代码Push到Github服务器上，然后再登录到Google的虚拟机上，Pull一次代码，然后再重新发布，整个过程非常繁琐麻烦。
+我的Blog是搭建在Goolge的vps上的，代码在Github服务器，撰写Blog则是在我的笔记本上进行，当我每次有文章更新的时候，我要先将本地的新代码Push到Github服务器上，然后再登录到Google的vps上，Pull一次代码，然后再重新发布，整个过程非常繁琐麻烦。
 
 所以我的目的是很清晰的，就是我只要在我的笔记本上Push代码，Google的虚拟机上就会自动检测到，并触发Pull新代码并自动构建发布的功能。
 
@@ -26,7 +26,7 @@ typora-root-url: ../../source
 
 重点主要在2和3，自动化的检测到Pull和自动化的触发构建。
 
-经过调研，发现github有一个非常符合需求的功能，叫webhook，它可以在push的时候给一个你指定的url发一个post请求，我们可以根据这个post请求去触发自动化构建过程。
+经过调研，发现github有一个非常符合需求的功能，叫webhook，它可以在push的时候给一个指定的url发送post请求，我们可以根据这个post请求去触发自动化构建过程。
 
 webhook所调用的post请求需要在vps上进行监听，由于之前我一直在使用golang编程，所以用go语言实现一个web服务用来监听webhook的请求是我的选择，各位可以根据自己的所长进行自己的选择构建web服务。
 
@@ -52,9 +52,21 @@ webhook所调用的post请求需要在vps上进行监听，由于之前我一直
 
 我是使用Hexo部署的Blog发布系统，具体安装和使用可以参考[HEXO](https://hexo.io)，这里不再详述，我的blog目录是/opt/blog，稍后的自动构建会使用到此目录。
 
+我的构建过程就是进入到blog目录中，然后pull代码，执行hexo generate就可以了：
+
+```bash
+cd /opt/blog
+git pull
+hexo generate
+```
+
+generate之后会在/opt/blog/public下生成网站的文件，将其连接到httpd的目录，就可以使用网页访问了（后续有配置过程）
+
+下面我们通过web程序监听8080端口，自动化执行上述功能
+
 ## 创建Web Server监听程序
 
-由于我之前一直都是用golang写程序，所以我比较喜欢写go的webserver，大家可以使用其他的编程语言写，主要目的就是监听8080端口，在有post请求时能够触发调用系统命令，对待发布项目（我这里是blog）进行重新发布。
+我比较喜欢写go的webserver，大家可以使用其他的编程语言写，主要目的就是监听8080端口，在有post请求时能够触发调用系统命令，对待发布项目（我这里是blog）进行重新发布。
 
 我的google vps虚拟机是centos7的，配置过程如下
 
@@ -111,9 +123,9 @@ webhook所调用的post请求需要在vps上进行监听，由于之前我一直
    }
    ```
 
-   这里有几个部分要说明一下，由于我这个只是个示例程序，所以我完全没有获取github传来的任何post数据，这里只要是有请求，我就认为被触发了，就重新构建，大家可以根据自己的语言和框架，对这部分进行丰富，go语言方面我比较推荐gin框架，速度快，还好用。
+   这里有几个部分要说明一下，由于我这个只是个示例程序，所以我完全没有获取github调用的post中的任何数据数据，这里只要是有请求，我就认为被触发了，就重新构建，大家可以根据自己的语言和框架，对这部分进行丰富，go语言方面我比较推荐gin框架，速度快，还好用。
 
-   webhook方法中我直接执行了系统程序，首先进入到blog生成目录，然后pull一次代码，并使用hexo进行重新blog发布版，发布版的网页都会存储在/opt/blog/public文件夹下
+   webhook方法中我直接执行了系统程序，首先进入到blog生成目录，然后pull一次代码，并使用hexo进行重新blog发布版，发布版的网页都会存储在/opt/blog/public文件夹下，通过软链接被httpd发布
 
 4. 设定go语言环境变量
 
@@ -126,7 +138,7 @@ webhook所调用的post请求需要在vps上进行监听，由于之前我一直
    如果想让其长期有效，也可以使用下述方法放到.bash_profile中
 
    ```bash
-   cat "export GOPATH=/opt/webhook" >> ~/.bash_profile
+   echo "export GOPATH=/opt/webhook" >> ~/.bash_profile
    source ~/.bash_profile
    ```
 
