@@ -1,3 +1,8 @@
+---
+title: iproute2 常用命令汇总
+tags: linux git golang iproute2
+date: 2019-01-17
+---
 # iproute2 常用命令汇总
 
 目前大部分的Linux操作系统都是以iproute2作为系统预装网络管理包，原有的ifconfig、route、netstat等都不做为默认的安装包安装了。
