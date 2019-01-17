@@ -3,13 +3,13 @@ title: iproute2 常用命令汇总
 tags: linux git golang iproute2
 date: 2019-01-16
 ---
-# iproute2 常用命令汇总
+## iproute2 常用命令汇总
 
 目前大部分的Linux操作系统都是以iproute2作为系统预装网络管理包，原有的ifconfig、route、netstat等都不做为默认的安装包安装了。
 
 iproute2提供了统一的网络配置命令，对之前分散在各个工具中的功能进行了整合，虽然用惯了之前的命令，但新的iproute2命令是未来的趋势，需要好好掌握。
 
-## IP地址管理
+### IP地址管理
 
 1. 列出IP address
 
@@ -56,7 +56,7 @@ iproute2提供了统一的网络配置命令，对之前分散在各个工具中
    ip -4 address flush
    ```
 
-## 链接管理（Link）
+### 链接管理（Link）
 
 1. 列出所有link
 
@@ -148,7 +148,7 @@ iproute2提供了统一的网络配置命令，对之前分散在各个工具中
    ip link set br0 up
    ```
 
-## Tap and Tun
+### Tap and Tun
 
 1. 列出所有tap、tun 设备
 
@@ -174,7 +174,7 @@ iproute2提供了统一的网络配置命令，对之前分散在各个工具中
    ip tuntap delete dev tap0 mode tap
    ```
 
-## route路由管理
+### route路由管理
 
 1. 列出所有的route
 
@@ -267,7 +267,7 @@ iproute2提供了统一的网络配置命令，对之前分散在各个工具中
 
    例如上述设置，如果10.0.1.1转发失败，会使用ppp0再行转发
 
-## namespace管理
+### namespace管理
 
 1. 列出所有namespace
 
