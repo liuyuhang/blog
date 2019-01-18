@@ -134,9 +134,6 @@ virsh list
          <memory unit="MiB">256</memory>
          <currentMemory unit="MiB">256</currentMemory>
          <vcpu placement="static">1</vcpu>
-         <cpu mode="custom">
-             <topology sockets="1" cores="1" threads="1"></topology>
-         </cpu>
          <resource>
              <partition>/machine</partition>
          </resource>
@@ -161,31 +158,14 @@ virsh list
                  <source file="/opt/vms/vm1/cirros-0.4.0-x86_64-disk.img"></source>
                  <target dev="hda" bus="ide"></target>
              </disk>
-             <controller type="ide" index="0">
-                 <alias name="ide0"></alias>
-             </controller>
-             <controller type="pci" index="0" model="pci-root">
-                 <alias name="pci.0"></alias>
-             </controller>
-             <controller type="usb" index="0" model="ich9-ehci1">
-                 <alias name=""></alias>
-             </controller>
-             <controller type="usb" index="0" model="ich9-uhci1">
-                 <alias name=""></alias>
-             </controller>
-             <input type="tablet" bus="usb">
-                 <address type="usb" bus="0" port="1.1"></address>
-             </input>
-             <graphics type="vnc" port="5900" autoport="yes" listen="0.0.0.0" passwd="123"></graphics>
+             <graphics type="vnc" port="5900" autoport="yes" listen="0.0.0.0"></graphics>
              <video>
                  <model type="vga" vram="32768" heads="1"></model>
              </video>
              <memballoon model="none"></memballoon>
-             <hub type="usb">
-                 <address type="usb" bus="0" port="1"></address>
-             </hub>
          </devices>
-     </domain>
+   </domain>
+   
                        
    ```
 
