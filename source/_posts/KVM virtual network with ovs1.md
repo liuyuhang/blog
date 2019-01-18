@@ -215,9 +215,9 @@ virsh list
 
    我们可以使用vncviewer等类型的工具进行查看，访问主机IP:5900端口 ，密码是123 则可访问创建的虚拟机桌面：
    
-   ![image-20190118161221604](../images/vnc-1.png)
+   ![image-20190118161221604](/images/vnc-1.png)
    
-   ![image-20190118162223402](../images/vnc-2.png)
+   ![image-20190118162223402](/images/vnc-2.png)
 
    
 
