@@ -1,6 +1,6 @@
 ---
 title: Hexo+Github在push后服务端自动pull和重新构建发布blog
-tags: linux git golang
+tags: git,linux
 categories: other
 date: 2019-01-11
 ---
