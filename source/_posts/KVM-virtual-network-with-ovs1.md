@@ -12,6 +12,7 @@ date: 2019-01-19
 ## 虚拟化环境准备
 
 在一切的开始，我们先准备一下我们在接下来要使用的硬件必要环境：
+
 |    实体       |   要求      |
 | -------- | -------------- |
 | CPU      | 支持硬件虚拟化 |
@@ -197,12 +198,12 @@ virsh list
 4. 开启虚拟机
 
    ```bash
-   # cd /opt/vms/vm1
-   # virsh create vm1.xml
+   cd /opt/vms/vm1
+   virsh create vm1.xml
    域 vm1 被创建（从 vm1.xml）
    
    // 验证：
-   # virsh list
+   virsh list
     Id    名称                         状态
    ----------------------------------------------------
     2     vm1                            running

@@ -73,16 +73,16 @@ generate之后会在/opt/blog/public下生成网站的文件，将其连接到ht
 1. 安装golang
 
    ```bash
-   # yum install golang
+   yum install golang
    ```
    安装httpd，将blog的发布文件夹与httpd的文件夹进行软连接
 
    ```bash
-   # yum install httpd  
-   # systemctl enable httpd
-   # systemctl start httpd
-   # mv /var/www/html /var/www/html.bak
-   # ln -s /opt/blog/public /var/www/html
+   yum install httpd  
+   systemctl enable httpd
+   systemctl start httpd
+   mv /var/www/html /var/www/html.bak
+   ln -s /opt/blog/public /var/www/html
    ```
 
    这样，每次使用hexo生成的blog，就会被httpd发布到80端口了
@@ -90,7 +90,7 @@ generate之后会在/opt/blog/public下生成网站的文件，将其连接到ht
 2. 创建项目文件夹
 
    ```bash
-   # mkdir -p /opt/blog-webhook/src
+   mkdir -p /opt/blog-webhook/src
    ```
 
 3. 编写监听程序代码
