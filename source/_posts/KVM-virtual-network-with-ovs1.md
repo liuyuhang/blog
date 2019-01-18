@@ -1,6 +1,6 @@
 ---
 title: kvm虚拟化网络手动实践1-虚拟化环境准备
-tags: kvm
+tags: [linux,kvm,network]
 categories: network
 date: 2019-01-19
 ---

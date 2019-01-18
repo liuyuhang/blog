@@ -1,7 +1,7 @@
 ---
 title: iproute2 常用命令汇总
-tags:  iproute2
-categories: network
+tags:  [iproute2,route,ip]
+categories: [linux,network]
 date: 2019-01-17
 
 ---
