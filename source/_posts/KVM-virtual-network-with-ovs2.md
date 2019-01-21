@@ -1,8 +1,9 @@
 ---
-title: kvm虚拟化网络手动实践2-网络逻辑架构
+title: kvm虚拟化网络手动实践2-4种网络逻辑架构
 tags: [kvm,network]
 categories: network
 date: 2019-01-21
+typora-root-url: ../../source
 ---
 
 在经典的云计算网络中，一般会有四种网络实现
@@ -21,7 +22,7 @@ date: 2019-01-21
 
 下图是一个简单的local network拓扑结构：
 
-![image-20190121145005081](/images/image-20190121145005081.png)
+![image-20190121165800426](/images/image-20190121165800426.png)
 
 这个网络是我们后期所有网络中最简单的一种
 
@@ -33,7 +34,37 @@ date: 2019-01-21
 
 我们在很多时候需要对虚拟机做网络安全规则的限制，但是在ovs的网络设备上是没有办法做iptables的，所以为了我们之后的网络拓扑结构，我们在local network中再进行一个更改：
 
-![image-20190121151939617](/images/image-20190121151939617.png)
+![image-20190121165716544](/images/image-20190121165716544.png)
 
 可以看到，我们在ovsbr-local和虚拟机之间增加了一个linux bridge，这个就是常说的安全网桥，专门用来将安全组规则实施到这个网桥上边。
 
+## Flat Network
+
+Flat，翻译过来就是扁平的意思，Flat Network形象的表明了，这个网络结构是一个扁平的网络结构，从逻辑的表示方式，Flat network的意思是将所有的虚拟机都放在一个网络中，没有分区，没有上下层级。
+
+在给出网络逻辑图之前，我们先了解一下云计算网络中的几个常用网桥：
+
+* br-int，全称OVS Integration Bridge，用来综合所有的虚拟机网络，所有的虚拟机都会通过Linux Bridge的安全网桥后，统一的连接到这个网桥上，在这个网桥之后，再连接到具体的网络出口：Provider Bridge。
+* br-eth*，命名上一般是以br+物理网卡名称来进行命名，但其真正的分类是叫Provider Bridge，意思是发布网桥，用来将虚拟机的网络流量指向到物理网卡，并进入到真正的物理网络中。
+
+理解完这两个概念，我们看一下Flat网络的结构图：
+
+![image-20190121160545741](/images/image-20190121160545741.png)
+
+这个是单个服务器上的网络，这种网络上，虚拟机的IP会直接被物理网络上的其他网络节点访问到，逻辑上是直通的。多个服务器之间的逻辑如下图：
+
+![image-20190121170839224](/images/image-20190121170839224.png)
+
+在这里涉及到多个设备之间的连接问题，使用的技术主要是veth和ovs的patch port，规则如下：
+
+* Linux Bridge  --- Linux Bridge 使用veth
+* Linux Bridge  --- OVS Bridge 使用veth
+* OVS Bridge --- OVS Bridge 使用patch port
+
+Flat Network使用场景：
+
+* 没有租户网络
+* 虚拟机及整个规模较小的情况
+* 各项目（project）之间没有网络隔离的简单使用环境
+
+一旦涉及到各虚拟机群组之间要进行网络隔离，那就必须要用到下面要说的Vlan或者Overlay网络模式。
