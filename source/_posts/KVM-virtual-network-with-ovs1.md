@@ -59,7 +59,7 @@ yum update
 安装 libvirtd、qemu-kvm、vim等
 
 ```bash
-yum install libvirtd qemu-kvm vim wget
+yum install libvirtd qemu-kvm vim wget openvswitch
 ```
 
 修改启动虚拟机的用户权限
@@ -73,6 +73,32 @@ vim /etc/libvirt/qemu.conf
 //取消注释
 user = "root"
 group = "root"
+```
+
+关闭selinux
+
+```bash
+# 修改/etc/sysconfig/selinux,设置为disabled
+cat /etc/sysconfig/selinux
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled
+# SELINUXTYPE= can take one of three values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected. 
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted 
+
+```
+
+上述设置会在重启后生效，我们先手动生效一下：
+
+```bash
+setenforce 0
 ```
 
 将firewalld关闭
@@ -98,6 +124,21 @@ virsh list
 
 
 // 代表libvirtd运行正常
+```
+
+设置openvswith
+
+```bash
+systemctl enable openvswitch
+systemctl start openvswitch
+```
+
+验证ovs
+
+```bash
+ovs-vsctl show
+27ae2440-3ae6-4c25-ba54-a1b4e1b01b2f
+    ovs_version: "2.0.0"
 ```
 
 ### 创建第一个虚拟机
