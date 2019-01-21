@@ -1,5 +1,5 @@
 ---
-title: kvm虚拟化网络手动实践2-4种网络逻辑架构简述
+title: kvm虚拟化网络手动实践2-4种网络逻辑架构简述（Local&Flat）
 tags: [kvm,network]
 categories: network
 date: 2019-01-21
@@ -67,4 +67,4 @@ Flat Network使用场景：
 * 虚拟机及整个规模较小的情况
 * 各项目（project）之间没有网络隔离的简单使用环境
 
-一旦涉及到各虚拟机群组之间要进行网络隔离，那就必须要用到下面要说的Vlan或者Overlay网络模式。
+一旦涉及到各虚拟机群组之间要进行网络隔离，那就必须要用到下一篇要说的Vlan或者Overlay网络模式。
