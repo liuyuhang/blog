@@ -1,5 +1,5 @@
 ---
-title: kvm虚拟化网络手动实践2-4种网络逻辑架构
+title: kvm虚拟化网络手动实践2-4种网络逻辑架构简述
 tags: [kvm,network]
 categories: network
 date: 2019-01-21
