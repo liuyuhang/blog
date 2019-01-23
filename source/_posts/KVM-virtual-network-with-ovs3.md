@@ -8,6 +8,8 @@ typora-root-url: ../../source
 
 之前我们看过了local和flat的网络结构，但我们在多租户、或者多网络需要隔离时，local和flat的网络就不能满足我们的需求了，我们要借助于虚拟局域网技术Vlan，或者更高层级的的Overlay Network（Vxlan）
 
+--- more ---
+
 ## Vlan Network
 
 vlan的整体网络结构和flat的network是相同的，如下图所示：
