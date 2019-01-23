@@ -2,7 +2,7 @@
 title: kvm虚拟化网络手动实践3-4种网络逻辑架构简述（vlan）
 tags: [kvm,network]
 categories: network
-date: 2019-01-21
+date: 2019-01-23
 typora-root-url: ../../source
 ---
 
